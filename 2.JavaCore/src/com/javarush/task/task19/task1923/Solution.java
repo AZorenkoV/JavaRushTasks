@@ -5,8 +5,6 @@ package com.javarush.task.task19.task1923;
 */
 
 import java.io.*;
-import java.util.regex.Matcher;
-import java.util.regex.Pattern;
 
 public class Solution {
     public static void main(String[] args) {
@@ -20,13 +18,9 @@ public class Solution {
             BufferedWriter bWriter = new BufferedWriter(fileWriter);
             while (bReeader.ready()){
                 String [] strings = bReeader.readLine().split(" ");
-                for (int i = 0, size = strings.length; i < size; i++) {
-                    if(strings[i].matches(".*\\d+.*")) bWriter.write(strings[i] + " ");
-                }
+                for (int i = 0, size = strings.length; i < size; i++) if(strings[i].matches(".*\\d+.*")) bWriter.write(strings[i] + " ");
             }
             bWriter.flush();
-        } catch (FileNotFoundException e) {
-            e.printStackTrace();
         } catch (IOException e) {
             e.printStackTrace();
         }
