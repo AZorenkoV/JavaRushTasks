@@ -27,27 +27,22 @@ public class Solution {
 
             ArrayList<String> tags = new ArrayList<>();
 
+            //считування вмісту файла
             while(fReader.ready()){
                 sb.append((char)fReader.read());
             }
             String newline = sb.toString().replaceAll( System.lineSeparator(), "");
 
 
-            while (newline.indexOf("<span") != -1){
-                String temp = newline.substring(newline.indexOf(openTag));
-                int nextOpenTag = temp.substring(openTag.length()).indexOf(openTag);
-                int nextCloseTeg = temp.indexOf(closeTag);
 
-                System.out.println(nextOpenTag + " " + nextCloseTeg);
+            while (newline.indexOf(openTag) != -1){
+                int openTagPosition = newline.indexOf(openTag);
+                int closeTagPosition = openTagPosition + getEndTagPosition(newline.substring(openTagPosition), openTag, closeTag);
 
-                if((nextOpenTag > nextCloseTeg) || (nextOpenTag == -1))
-                    tags.add(temp.substring(0 , temp.indexOf(closeTag)+closeTag.length()));
-                else
-                {
-                    while (temp.lastIndexOf(openTag) )
-                }
-                newline = newline.substring(newline.indexOf(openTag)+openTag.length());
+                tags.add(newline.substring(openTagPosition, closeTagPosition + closeTag.length()));
+                newline = newline.substring(openTagPosition + openTag.length());
             }
+
 
             for (String item :
                     tags) {
@@ -56,6 +51,17 @@ public class Solution {
             }
 
         }
+    }
+
+    private static int getEndTagPosition(String line, String openTag, String closeTag) {
+        int nextOpenTagPosition = line.substring(1).indexOf(openTag);
+        int nextCloseTagPosition = line.indexOf(closeTag);
+        //System.out.println("OpenTag " + nextOpenTagPosition + " CloseTag " + nextCloseTagPosition);
+
+        if ((nextOpenTagPosition < nextCloseTagPosition) && (nextOpenTagPosition != -1)) {
+            nextCloseTagPosition += (getEndTagPosition(line.substring(nextCloseTagPosition+1), openTag, closeTag) + 1);
+        }
+        return nextCloseTagPosition;
     }
 }
 
