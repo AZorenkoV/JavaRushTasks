@@ -24,6 +24,12 @@ public class Solution {
             Human somePerson = new Human();
             somePerson.load(inputStream);
             //check here that ivanov equals to somePerson - проверьте тут, что ivanov и somePerson равны
+            System.out.println(somePerson.name);
+            for (Asset item :
+                    somePerson.assets) {
+                System.out.println(item.getName());
+            }
+            System.out.println(ivanov.equals(ivanov));
             System.out.println(ivanov.equals(somePerson));
             inputStream.close();
 
@@ -42,12 +48,12 @@ public class Solution {
 
         @Override
         public boolean equals(Object o) {
-            if (this == o) return false;
+            if (this == o) return true;
             if (o == null || getClass() != o.getClass()) return false;
 
             Human human = (Human) o;
 
-            if (name == null ? !name.equals(human.name) : human.name != null) return false;
+            if (name != null ? !name.equals(human.name) : human.name != null) return false;
             return assets != null ? assets.equals(human.assets) : human.assets == null;
 
         }
@@ -56,7 +62,7 @@ public class Solution {
         public int hashCode() {
             int result = name != null ? name.hashCode() : 0;
             result = 31 * result + (assets != null ? assets.hashCode() : 0);
-            return (int) (Math.random() * 100);
+            return result;
         }
 
         public Human() {
