@@ -11,6 +11,10 @@ public class CustomTree extends AbstractList<String> implements Cloneable, Seria
     Entry root;
     int size = 0;
 
+    public CustomTree(){
+        root = new Entry("0");
+    }
+
     @Override
     public String get(int index) {
         throw new UnsupportedOperationException();
@@ -23,12 +27,7 @@ public class CustomTree extends AbstractList<String> implements Cloneable, Seria
     @Override
     public boolean add(String s) {
         size++;
-        return super.add(s);
-    }
-
-    public void add(int index, String element) {
-        size++;
-        throw new UnsupportedOperationException();
+        return true;
     }
 
     public String remove(int index) {
@@ -47,8 +46,8 @@ public class CustomTree extends AbstractList<String> implements Cloneable, Seria
         throw new UnsupportedOperationException();
     }
 
-    public Entry getParent(String s) {
-        return root;
+    public String getParent(String s) {
+        return root.elementName;
     }
 
     @Override
